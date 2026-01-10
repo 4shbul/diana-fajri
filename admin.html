@@ -3,75 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generator Undangan Diana & Fajri</title>
+    <title>Generator Pesan WhatsApp - Diana & Fajri</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f5f5f4; }
     </style>
 </head>
-<body class="bg-stone-100 min-h-screen flex items-center justify-center p-6">
+<body class="min-h-screen flex items-center justify-center p-4">
 
-    <div class="bg-white p-8 rounded-3xl shadow-2xl w-full max-w-md border border-stone-200">
+    <div class="bg-white p-8 rounded-3xl shadow-2xl w-full max-w-lg border border-stone-200">
         <div class="text-center mb-8">
-            <h2 class="text-2xl font-bold text-stone-800">Link Generator</h2>
-            <p class="text-sm text-stone-500">Undangan Diana & Fajri</p>
+            <h2 class="text-2xl font-bold text-stone-800 tracking-tight">WhatsApp Generator</h2>
+            <p class="text-sm text-stone-500 mt-1">Undangan Pernikahan Diana & Fajri</p>
         </div>
 
-        <div class="space-y-5">
+        <div class="space-y-6">
             <div>
-                <label class="block text-xs font-bold text-stone-400 uppercase tracking-widest mb-2">Nama Tamu</label>
+                <label class="block text-xs font-bold text-stone-400 uppercase tracking-[0.2em] mb-2">Nama Tamu</label>
                 <input type="text" id="guestName" placeholder="Contoh: Budi & Istri" 
                        class="w-full p-4 bg-stone-50 border border-stone-200 rounded-xl focus:ring-2 focus:ring-stone-800 outline-none transition-all">
             </div>
 
-            <button onclick="generateLink()" 
-                    class="w-full bg-stone-900 text-white font-bold py-4 rounded-xl hover:bg-stone-800 active:scale-95 transition-all shadow-lg shadow-stone-200">
-                Buat & Salin Link
+            <button onclick="generateWhatsApp()" 
+                    class="w-full bg-stone-900 text-white font-bold py-4 rounded-xl hover:bg-stone-800 active:scale-95 transition-all shadow-lg">
+                Generate Pesan & Link
             </button>
         </div>
 
         <div id="resultArea" class="mt-8 pt-8 border-t border-stone-100 hidden">
-            <label class="block text-xs font-bold text-stone-400 uppercase tracking-widest mb-2">Hasil Link:</label>
-            <textarea id="finalUrl" readonly 
-                      class="w-full p-3 bg-stone-50 border border-stone-100 rounded-lg text-sm text-blue-600 h-20 resize-none outline-none"></textarea>
-            
-            <div id="copyStatus" class="flex items-center justify-center gap-2 mt-3 text-green-600 text-[10px] font-bold uppercase tracking-widest animate-bounce">
-                <span>✅ Link Berhasil Disalin!</span>
+            <div class="mb-4">
+                <label class="block text-xs font-bold text-stone-400 uppercase tracking-widest mb-2">Review Pesan:</label>
+                <div id="previewText" class="p-4 bg-stone-50 border border-stone-100 rounded-xl text-[13px] text-stone-700 whitespace-pre-line leading-relaxed italic shadow-inner">
+                    </div>
             </div>
+
+            <button onclick="copyToClipboard()" id="copyBtn"
+                    class="w-full border-2 border-stone-900 text-stone-900 font-bold py-3 rounded-xl hover:bg-stone-900 hover:text-white transition-all flex items-center justify-center gap-2">
+                <span>📋 Salin Pesan untuk WhatsApp</span>
+            </button>
             
-            <p class="text-[10px] text-stone-400 mt-4 text-center leading-relaxed">
-                Silakan tempel (paste) di WhatsApp untuk mengirim ke tamu.
+            <p id="copyStatus" class="text-center text-green-600 text-[10px] font-bold mt-3 uppercase hidden animate-pulse">
+                Berhasil Disalin! Silakan Paste di WhatsApp.
             </p>
         </div>
     </div>
 
     <script>
-        function generateLink() {
+        function generateWhatsApp() {
             const guestName = document.getElementById('guestName').value.trim();
-            
             if(!guestName) {
-                alert("Silakan masukkan nama tamu terlebih dahulu!");
+                alert("Masukkan nama tamu dulu!");
                 return;
             }
 
-            // Link Netlify Anda
             const baseUrl = "https://weddingdiana-fajri.netlify.app";
-            
-            // Encode nama tamu (spasi jadi %20, dll)
             const encodedName = encodeURIComponent(guestName);
-            
-            // Hasil akhir link
             const finalUrl = `${baseUrl}/?to=${encodedName}`;
 
-            // Tampilkan UI hasil
-            document.getElementById('finalUrl').value = finalUrl;
-            document.getElementById('resultArea').classList.remove('hidden');
+            // --- TEKS PESAN WHATSAPP ---
+            const message = `Assalamu’alaikum Warahmatullahi Wabarakatuh.
 
-            // Salin otomatis ke clipboard
-            navigator.clipboard.writeText(finalUrl).then(() => {
+Tanpa mengurangi rasa hormat, perkenankan kami mengundang Bapak/Ibu/Saudara/i *${guestName}* untuk menghadiri acara pernikahan kami.
+
+Silakan klik tautan di bawah ini untuk melihat undangan selengkapnya:
+
+${finalUrl}
+
+Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir untuk memberikan doa restu kepada kami.
+
+Terima kasih.
+Wassalamu’alaikum Warahmatullahi Wabarakatuh.
+
+*Andi Diana & Fajri Wijaya*`;
+
+            // Tampilkan hasil
+            document.getElementById('previewText').innerText = message;
+            document.getElementById('resultArea').classList.remove('hidden');
+        }
+
+        function copyToClipboard() {
+            const text = document.getElementById('previewText').innerText;
+            navigator.clipboard.writeText(text).then(() => {
                 const status = document.getElementById('copyStatus');
                 status.classList.remove('hidden');
+                setTimeout(() => status.classList.add('hidden'), 3000);
             });
         }
     </script>
