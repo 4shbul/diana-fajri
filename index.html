@@ -95,19 +95,20 @@
         <span id="music-icon" class="text-xl">🔊</span>
     </div>
 
-    <div id="cover">
-        <div class="text-center px-6 max-w-lg">
-            <h4 class="text-[10px] tracking-[0.7em] text-stone-400 uppercase mb-5 font-bold">The Wedding Invitation</h4>
-            <h1 class="font-modern text-[13vw] md:text-[8vw] leading-none mb-8">Diana & Fajri</h1>
-            <div class="mb-12">
-                <p class="text-[9px] tracking-[0.3em] uppercase opacity-40 mb-2 font-bold">Special Invite For</p>
-                <p class="text-xl font-light italic text-stone-700">Tamu Kehormatan</p>
-            </div>
-            <button onclick="openInvitation()" class="px-12 py-5 border border-black text-[10px] tracking-[0.5em] font-bold uppercase hover:bg-black hover:text-white transition-all duration-700">
-                Buka Undangan
-            </button>
+   <div id="cover">
+    <div class="text-center px-6">
+        <h4 class="text-[10px] tracking-[0.5em] text-stone-400 uppercase mb-4">Wedding Invitation</h4>
+        <h1 class="font-modern text-5xl md:text-7xl mb-8">Diana & Fajri</h1>
+        
+        <div class="mb-10 p-4 border-y border-stone-100 py-6">
+            <p class="text-[9px] uppercase tracking-widest text-stone-400 mb-3 font-bold">Kepada Yth. Bapak/Ibu/Saudara/i:</p>
+            <h2 id="guest-name" class="text-2xl font-modern text-stone-800 italic">Tamu Kehormatan</h2>
         </div>
+        <button onclick="openInvitation()" class="px-10 py-4 border border-black text-[10px] tracking-[0.3em] uppercase font-bold hover:bg-black hover:text-white transition-all">
+            Buka Undangan
+        </button>
     </div>
+</div>
 
     <main>
         <section class="hero-bg px-6 py-20 text-center">
@@ -245,6 +246,26 @@
     <script>
         const audio = document.getElementById("myAudio");
         let isPlaying = false;
+
+    // Fungsi untuk mengambil nama dari URL
+    function getGuestName() {
+        // 1. Ambil parameter dari URL (misal: ?to=Andi)
+        const urlParams = new URLSearchParams(window.location.search);
+        const guest = urlParams.get('to'); 
+        
+        // 2. Jika ada nama di URL, ganti tulisan "Tamu Kehormatan"
+        if (guest) {
+            const nameElement = document.getElementById('guest-name');
+            if(nameElement) {
+                // decodeURIComponent digunakan agar tanda + atau %20 kembali jadi spasi
+                nameElement.innerText = decodeURIComponent(guest);
+            }
+        }
+    }
+
+    // Jalankan fungsi saat halaman dimuat
+    window.addEventListener('DOMContentLoaded', getGuestName);
+
 
         // FUNGSI BUKA UNDANGAN
         function openInvitation() {
