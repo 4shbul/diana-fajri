@@ -22,19 +22,53 @@
         .font-modern { font-family: 'Tenor Sans', sans-serif; }
         .font-arabic { font-family: 'Amiri', serif; }
 
-        /* HERO SECTION DENGAN FOTO BACKGROUND */
-        .hero-bg {
-            position: relative;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-image: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(10,10,10,1)), 
-                              url('./img/6.jpg');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-        }
+        /* Container Hero */
+.hero-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; /* Memaksa semua teks ke area bawah layar */
+    align-items: center;
+    overflow: hidden;
+    background-color: #000;
+}
+
+/* Pengaturan Gambar Agar Tidak Menutup */
+.hero-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 70%; /* Gambar hanya mengambil 70% tinggi layar di area atas */
+    object-fit: cover;
+    object-position: center top; /* Memastikan kepala/wajah di paling atas */
+    z-index: 1;
+}
+
+/* Overlay Gradasi yang lebih halus */
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    /* Membuat transparan di atas (wajah bersih) dan mulai gelap di tengah ke bawah */
+    background: linear-gradient(to bottom, 
+        rgba(10,10,10,0) 0%, 
+        rgba(10,10,10,0) 30%, 
+        rgba(10,10,10,0.6) 60%, 
+        rgba(10,10,10,1) 90%);
+    z-index: 2;
+}
+
+/* Konten Teks */
+.hero-content {
+    position: relative;
+    z-index: 3;
+    width: 100%;
+    padding-bottom: 40px; /* Memberi jarak aman dari navigasi bawah HP */
+    text-align: center;
+}
 
         /* EFEK GRAIN (Tekstur Halus) */
         .bg-grain {
@@ -111,35 +145,47 @@
 </div>
 
     <main>
-        <section class="hero-bg px-6 py-20 text-center">
-            <div data-aos="fade-up" data-aos-duration="2000">
-                <span class="text-[9px] tracking-[0.8em] text-stone-300 uppercase block font-bold mb-6">The Wedding of</span>
-                <h2 class="font-modern text-[12vw] md:text-[7vw] leading-tight text-white mb-12">
-                    Andi Diana <br>
-                    <span class="italic text-stone-400">& Fajri Wijaya</span>
-                </h2>
-                
-                <div class="flex justify-center gap-3 md:gap-6 mb-12">
-                    <div class="timer-box">
-                        <span id="days" class="text-3xl font-light block text-white">00</span>
-                        <span class="text-[8px] uppercase tracking-widest text-stone-400">Hari</span>
-                    </div>
-                    <div class="timer-box">
-                        <span id="hours" class="text-3xl font-light block text-white">00</span>
-                        <span class="text-[8px] uppercase tracking-widest text-stone-400">Jam</span>
-                    </div>
-                    <div class="timer-box">
-                        <span id="minutes" class="text-3xl font-light block text-white">00</span>
-                        <span class="text-[8px] uppercase tracking-widest text-stone-400">Menit</span>
-                    </div>
-                    <div class="timer-box">
-                        <span id="seconds" class="text-3xl font-light block text-white">00</span>
-                        <span class="text-[8px] uppercase tracking-widest text-stone-400">Detik</span>
-                    </div>
-                </div>
-                <p class="text-[11px] tracking-[0.6em] text-stone-300 uppercase font-bold italic">Senin, 26 Januari 2026</p>
+        <section style="position: relative; width: 100%; height: 100vh; height: 100svh; background-color: #000; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end;">
+    
+    <img 
+        src="./img/2.jpg" 
+        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 20%; z-index: 1;"
+        alt="Background">
+
+    <div style="position: absolute; inset: 0; background: rgba(0, 0, 0, 0.5); z-index: 2;"></div>
+    
+    <div style="position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 40%, rgba(10,10,10,0.9) 80%, #0a0a0a 100%); z-index: 2;"></div>
+
+    <div class="px-6 pb-16 text-center" style="position: relative; z-index: 3;" data-aos="fade-up">
+        <span style="font-size: 10px; letter-spacing: 0.7em; color: #d6d3d1; text-transform: uppercase; display: block; margin-bottom: 20px; font-weight: bold; text-shadow: 1px 1px 2px rgba(0,0,0,0.5);">The Wedding of</span>
+        
+        <h2 class="font-modern" style="font-size: 12vw; color: white; line-height: 1.1; margin-bottom: 32px; text-shadow: 2px 2px 10px rgba(0,0,0,0.8);">
+            Andi Diana <br>
+            <span style="font-style: italic; color: #a8a29e;">& Fajri Wijaya</span>
+        </h2>
+        
+        <div style="display: flex; justify-content: center; gap: 10px; margin-bottom: 35px;">
+            <div style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(5px); padding: 12px; border-radius: 12px; min-width: 65px;">
+                <span id="days" style="font-size: 24px; display: block; color: white;">00</span>
+                <span style="font-size: 8px; text-transform: uppercase; color: #ccc;">Hari</span>
             </div>
-        </section>
+            <div style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(5px); padding: 12px; border-radius: 12px; min-width: 65px;">
+                <span id="hours" style="font-size: 24px; display: block; color: white;">00</span>
+                <span style="font-size: 8px; text-transform: uppercase; color: #ccc;">Jam</span>
+            </div>
+            <div style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(5px); padding: 12px; border-radius: 12px; min-width: 65px;">
+                <span id="minutes" style="font-size: 24px; display: block; color: white;">00</span>
+                <span style="font-size: 8px; text-transform: uppercase; color: #ccc;">Menit</span>
+            </div>
+            <div style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(5px); padding: 12px; border-radius: 12px; min-width: 65px;">
+                <span id="seconds" style="font-size: 24px; display: block; color: white;">00</span>
+                <span style="font-size: 8px; text-transform: uppercase; color: #ccc;">Detik</span>
+            </div>
+        </div>
+        
+        <p style="font-size: 11px; letter-spacing: 0.5em; color: white; font-weight: bold; text-transform: uppercase; text-shadow: 1px 1px 5px rgba(0,0,0,0.5);">26 Januari 2026</p>
+    </div>
+</section>
 
         <section class="py-24 bg-stone-950 px-6 text-center">
             <div class="max-w-3xl mx-auto" data-aos="fade-up">
